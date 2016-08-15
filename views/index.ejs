@@ -1,0 +1,13 @@
+<html>
+<head>
+</head>
+<body>
+	<h1>Welcome to Passport</h1>
+	<% if (!isAuthenticated) { %> 
+		<a href="/login">Click to Login</a>
+	<% } else { %>
+		Hello, <%= user.name %>
+		<a href="/logout">Click to Logout</a>
+	<% } %>
+</body>
+</html>

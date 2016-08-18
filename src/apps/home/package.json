@@ -1,0 +1,14 @@
+{
+  "name": "Custom Home",
+  "version": "1.0.0",
+  "description": "Home skill",
+  "main": "index.js",
+  "author": "Trevor Larson<trevor.larson@hp.com>",
+  "license": "proprietary",
+  "alexa": {
+    "applicationId":"amzn1.echo-sdk-ams.app.aec85fc9-b82c-4e3b-8c14-6fd57702dd69"
+  },
+  "dependencies": {
+    "alexa-app": "^2.1.0"
+  }
+}

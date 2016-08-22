@@ -29,7 +29,7 @@ module.exports = function(passport) {
       if (err){
         done(err,data);
       }
-      done(err,data.Item)
+      done(err,false)
     })
   });
 
@@ -66,6 +66,7 @@ module.exports = function(passport) {
         }
       }
     }
+    console.log(serial_whitelist_params);
     dd.query(serial_whitelist_params, function (err, data) {
       if (err) {
         return done(err);
@@ -87,18 +88,19 @@ module.exports = function(passport) {
           if (data.Items.length > 0) {
             return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
           } else {
+            
             var params = {
               "TableName": tableName,
               "Item": {
                 "id": { "N": (Math.floor(Math.random() * 4294967296)).toString() },
                 "firstName": { "S": req.body.firstName },
                 "lastName": { "S": req.body.lastName },
-                "email": {"S" : req.body.mail},
+                "email": {"S" : req.body.email},
                 "pw": { "S": bcrypt.hashSync(password) },
                 "serial": { "S": req.body.serial }
               }
             }
-            
+            console.log(params);
             dd.putItem(params, function (err, data) {
               if (err) {
                 return done(null, false, req.flash('signupMessage', "Apologies, please try again now. (" + err + ")"));

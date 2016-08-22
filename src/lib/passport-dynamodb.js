@@ -29,7 +29,10 @@ module.exports = function(passport) {
       if (err){
         done(err,data);
       }
-      done(err,data.Item)
+      if(data.Item)
+        done(err,data.Item)
+      else
+        done(err, false)
     })
   });
 

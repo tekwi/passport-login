@@ -20,11 +20,6 @@
     "morgan": "~1.6.1",
     "node-bing-api": "^2.4.1",
     "passport-local": "^1.0.0",
-    "serve-favicon": "~2.3.0",
-    "nodemon": "~1.10.1"
-  },
-  "devDependencies": {
-    "forever": "^0.15.2",
-    "nodemon": "^1.10.1"
+    "serve-favicon": "~2.3.0"
   }
 }

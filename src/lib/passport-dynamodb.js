@@ -33,6 +33,91 @@ module.exports = function(passport) {
     })
   });
 
+  // =========================================================================
+  // LOCAL SIGNUP ============================================================
+  // =========================================================================
+  // we are using named strategies since we have one for login and one for signup
+  // by default, if there was no name, it would just be called 'local'
+
+  passport.use('local-signup', new LocalStrategy({
+    // by default, local strategy uses username and password, we will override with email
+    usernameField : 'email',
+    passwordField : 'password',
+    passReqToCallback : true // allows us to pass back the entire request to the callback
+  },
+  function(req, email, password, done) {
+    var params = {
+      "TableName":tableName,
+      "IndexName":"email-index",
+      "KeyConditions":{
+        "email":{
+          "ComparisonOperator":"EQ",
+          "AttributeValueList":[{"S":email}]
+        }
+      }
+    }
+
+    var serial_whitelist_params = {
+      "TableName":"serial_whitelist",
+      "KeyConditions":{
+        "id":{
+          "ComparisonOperator":"EQ",
+          "AttributeValueList":[{"S":req.body.serial}]
+        }
+      }
+    }
+    dd.query(serial_whitelist_params, function (err, data) {
+      if (err) {
+        return done(err);
+      }
+      console.log(data);
+      if (data.Items.length > 0) {
+
+        console.log("Scanning for :" + JSON.stringify(params));
+
+        // find a user whose email is the same as the forms email
+        // we are checking to see if the user trying to login already exists
+        dd.query(params, function (err, data) {
+          // if there are any errors, return the error
+          if (err) {
+            return done(err);
+          }
+
+          // check to see if theres already a user with that email
+          if (data.Items.length > 0) {
+            return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
+          } else {
+            var params = {
+              "TableName": tableName,
+              "Item": {
+                "id": { "N": (Math.floor(Math.random() * 4294967296)).toString() },
+                "firstName": { "S": req.body.firstName },
+                "lastName": { "S": req.body.lastName },
+                "email": {"S" : req.body.mail},
+                "pw": { "S": bcrypt.hashSync(password) },
+                "serial": { "S": req.body.serial }
+              }
+            }
+            
+            dd.putItem(params, function (err, data) {
+              if (err) {
+                return done(null, false, req.flash('signupMessage', "Apologies, please try again now. (" + err + ")"));
+              } else {
+                return done(null, params.Item);
+              }
+            })
+
+          }
+
+        });
+
+      }
+      else {
+        return done(null, false, req.flash('signupMessage', 'Invalid serial number.'));
+      }
+    });
+
+  }));
 
   // =========================================================================
   // LOCAL LOGIN =============================================================

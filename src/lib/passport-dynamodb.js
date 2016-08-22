@@ -71,7 +71,7 @@ module.exports = function(passport) {
       if (err) {
         return done(err);
       }
-      console.log(data);
+      
       if (data.Items.length > 0) {
 
         console.log("Scanning for :" + JSON.stringify(params));
@@ -100,7 +100,7 @@ module.exports = function(passport) {
                 "serial": { "S": req.body.serial }
               }
             }
-            console.log(params);
+            
             dd.putItem(params, function (err, data) {
               if (err) {
                 return done(null, false, req.flash('signupMessage', "Apologies, please try again now. (" + err + ")"));

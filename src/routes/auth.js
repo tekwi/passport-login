@@ -14,7 +14,7 @@ router.get('/', function(req, res, next) {
   var params = {
     TableName:table,
     Item:{
-      "code":req.query["code"],
+      "code":req.query.code,
       "timestamp":new Date().getTime(),
       "id":req.query["state"]      
     } 

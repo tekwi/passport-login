@@ -104,14 +104,14 @@ module.exports = function(passport) {
               }
             }
             
-            dd.putItem(params, function (err, data) {
-              if (err) {
-                return done(null, false, req.flash('signupMessage', "Apologies, please try again now. (" + err + ")"));
-              } else {
-                return done(null, params.Item);
-              }
-            })
-
+            // dd.putItem(params, function (err, data) {
+            //   if (err) {
+            //     return done(null, false, req.flash('signupMessage', "Apologies, please try again now. (" + err + ")"));
+            //   } else {
+            //     return done(null, params.Item);
+            //   }
+            // })
+            return done(null, params.Item);
           }
 
         });

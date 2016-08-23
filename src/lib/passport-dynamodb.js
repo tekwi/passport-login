@@ -72,7 +72,7 @@ module.exports = function(passport) {
     console.log(serial_whitelist_params);
     dd.query(serial_whitelist_params, function (err, data) {
       if (err) {
-        return done(err);
+        return done(err,false, req.session.message = "Invalid serial number.");
       }
       
       if (data.Items.length > 0) {
@@ -89,7 +89,7 @@ module.exports = function(passport) {
 
           // check to see if theres already a user with that email
           if (data.Items.length > 0) {
-            return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
+            return done(null, false, req.session.message = 'That email is already taken.');
           } else {
             
             var params = {
@@ -104,21 +104,21 @@ module.exports = function(passport) {
               }
             }
             
-            // dd.putItem(params, function (err, data) {
-            //   if (err) {
-            //     return done(null, false, req.flash('signupMessage', "Apologies, please try again now. (" + err + ")"));
-            //   } else {
-            //     return done(null, params.Item);
-            //   }
-            // })
-            return done(null, params.Item);
+            dd.putItem(params, function (err, data) {
+              if (err) {
+                return done(null, false, req.session.message = "Apologies, please try again now. (" + err + ")");
+              } else {
+                return done(null, params.Item, req.session.message = null);
+              }
+            })
+            return done(null, params.Item, req.session.message = null);
           }
 
         });
 
       }
       else {
-        return done(null, false, req.flash('signupMessage', 'Invalid serial number.'));
+        return done(null, false, req.session.message = "Invalid serial number.");
       }
     });
 
@@ -147,21 +147,22 @@ module.exports = function(passport) {
         }
       }
     }
+
     dd.query(params, function(err,data){
       if (err){
         return done(err);
       }
       if (data.Items.length == 0){
-        return done(null, false, req.flash('loginMessage', 'No user found.')); // req.flash is the way to set flashdata using connect-flash
+        return done(null, false, req.session.message = 'Invalid Username or Password'); // req.flash is the way to set flashdata using connect-flash
       }
       dd.getItem({"TableName":tableName,"Key": {"id":data.Items[0]["id"]}}, function(err,data){
         if (err){
           return done(err);
         }
         if (!bcrypt.compareSync(password, data.Item.pw.S)){
-          return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.')); // create the loginMessage and save it to session as flashdata
+          return done(null, false, req.session.message = 'Incorrect Password'); // create the loginMessage and save it to session as flashdata
         }else{
-          return done(null, data.Item);
+          return done(null, data.Item, req.session.message = null);
         }
       })
     });

@@ -41,7 +41,7 @@
                     <p class="lead">We're currently in alpha test.</p>
                     <form action="/login" class="form-signin" method="post">
                         <h2 class="form-signin-heading">Please sign in</h2>
-                        <% if (typeof message != "undefined") { %>
+                        <% if (typeof message !== "undefined" && message !== null) { %>
                             <div class="alert alert-danger user-login" style="display: block;">
                                 <%= message %>
                                 <a href="#" class="close" data-dismiss="alert">×</a>

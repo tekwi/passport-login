@@ -18,6 +18,6 @@ router.get('/', isAuthenticated, function(req, res){
  
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('home', { title: 'Express' });
+  res.render('home', { message: req.flash("message") });
 });
 module.exports = router;

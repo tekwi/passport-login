@@ -27,11 +27,14 @@ router.get('/:code?/:scope?', function(req, res, next) {
         res.send("error: " + JSON.stringify(err, null, 2));
       } else {
         //req.session.destroy(function(err){});
-        res.send("Congratulations, you are now registered and ready to use voice-enabled printer.");
+        req.flash("message", "Congratulations, you are now registered and ready to use voice-enabled printer.");
+        res.render("home", {message : req.flash("message"), warning: req.flash("warning")});
       }
     });
   }else{
-    res.send("Authcode not valid.");
+      req.flash("warning", "Authorization failed. Please try again!");
+      res.render("home", {message : req.flash("message"), warning: req.flash("warning")});
+      //res.send("Authcode not valid.");
   }
     // res.send("Success! You are now ready to talk to MACEDON!");
   });

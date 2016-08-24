@@ -21,7 +21,7 @@ var expressSession = require('express-session');
 var passport = require('passport');
 var passportDb = require('./lib/passport-dynamodb');
 var login = require('./routes/login')(passport);
-
+var logout = require('./routes/logout');
 
 var app = express();
 
@@ -66,8 +66,8 @@ app.use('/getlight', getlight);
 app.use('/temp', temp);
 app.use('/reqlink', reqlink);
 app.use('/verifylink', verifylink);
+app.use('/logout', logout);
 app.use('/', login);
-
 
 var alexa_app = require('./apps/printer');
 var home_app = require('./apps/home');

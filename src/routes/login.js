@@ -7,7 +7,12 @@ module.exports = function(passport){
   router.get('/', function(req, res) {
       res.render('index', { message: req.flash('info') });
   });
-
+    
+  router.get('/login', function(req, res) {
+    console.log(req.query.rurl);
+      res.render('index', { message: req.flash('info') });
+  });
+  
 /* GET login page. */
   // router.get('/:code?/:scope?', function(req, res) {
   //           res.render('index', { message: req.flash('info') });

@@ -27,7 +27,7 @@ router.get('/:code?/:scope?', function(req, res, next) {
         res.send("error: " + JSON.stringify(err, null, 2));
       } else {
         //req.session.destroy(function(err){});
-        req.flash("message", "Congratulations, you are now registered and ready to use voice-enabled printer.");
+        req.flash("message", "Congratulations "+ req.user.firstName.S +", you are now registered and ready to use voice-enabled printer.");
         res.render("home", {message : req.flash("message"), warning: req.flash("warning")});
       }
     });

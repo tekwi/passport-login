@@ -68,6 +68,7 @@ app.use('/reqlink', reqlink);
 app.use('/verifylink', verifylink);
 app.use('/', login);
 
+
 var alexa_app = require('./apps/printer');
 var home_app = require('./apps/home');
 home_app.express(app, "/alexa/");

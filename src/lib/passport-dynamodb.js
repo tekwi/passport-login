@@ -69,15 +69,12 @@ module.exports = function(passport) {
         }
       }
     }
-    console.log(serial_whitelist_params);
     dd.query(serial_whitelist_params, function (err, data) {
       if (err) {
-        return done(err,false, req.session.message = "Invalid serial number.");
+        return done(err,false, req.flash('message', "Application error."));
       }
       
       if (data.Items.length > 0) {
-
-        console.log("Scanning for :" + JSON.stringify(params));
 
         // find a user whose email is the same as the forms email
         // we are checking to see if the user trying to login already exists
@@ -86,10 +83,10 @@ module.exports = function(passport) {
           if (err) {
             return done(err);
           }
-
+          console.log("here");
           // check to see if theres already a user with that email
           if (data.Items.length > 0) {
-            return done(null, false, req.session.message = 'That email is already taken.');
+            return done(null, false, req.flash("message", "That email is already taken."));
           } else {
             
             var params = {
@@ -106,19 +103,19 @@ module.exports = function(passport) {
             
             dd.putItem(params, function (err, data) {
               if (err) {
-                return done(null, false, req.session.message = "Apologies, please try again now. (" + err + ")");
+                return done(null, false, req.flash('message', "Apologies, please try again now. (" + err + ")"));
               } else {
-                return done(null, params.Item, req.session.message = null);
+                return done(null, params.Item);
               }
             })
-            return done(null, params.Item, req.session.message = null);
+            return done(null, params.Item);
           }
 
         });
 
       }
       else {
-        return done(null, false, req.session.message = "Invalid serial number.");
+        return done(null, false, req.flash("message", "Invalid serial number."));
       }
     });
 
@@ -153,16 +150,16 @@ module.exports = function(passport) {
         return done(err);
       }
       if (data.Items.length == 0){
-        return done(null, false, req.session.message = 'Invalid Username or Password'); // req.flash is the way to set flashdata using connect-flash
+        return done(null, false, req.flash('message', 'Invalid Username or Password')); // req.flash is the way to set flashdata using connect-flash
       }
       dd.getItem({"TableName":tableName,"Key": {"id":data.Items[0]["id"]}}, function(err,data){
         if (err){
           return done(err);
         }
         if (!bcrypt.compareSync(password, data.Item.pw.S)){
-          return done(null, false, req.session.message = 'Incorrect Password'); // create the loginMessage and save it to session as flashdata
+          return done(null, false, req.flash('message', 'Incorrect Password')); // create the loginMessage and save it to session as flashdata
         }else{
-          return done(null, data.Item, req.session.message = null);
+          return done(null, data.Item);
         }
       })
     });

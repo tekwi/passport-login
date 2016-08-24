@@ -6,9 +6,11 @@ module.exports = function(passport){
   /* GET login page. */
   router.get('/', function(req, res) {
     // Display the Login page with any flash message, if any
-    res.render('index', { message: req.session.message });
+    // res.render('index', { message: req.session.message });
+    res.render('index', { message: req.flash('info') });
   });
  
+
   /* Handle Login POST */
   router.post('/login', passport.authenticate('local-login', {
     successRedirect: '/home',
@@ -19,9 +21,7 @@ module.exports = function(passport){
   /* GET login failure page. */
   router.get('/failure', function(req, res) {
     // Display the Login page with any flash message, if any
-    res.render('index', { message: req.session.message });
-    req.session.message = null;
-    console.log(req.session.message);
+    res.render('index', { message: req.flash('message')});
   })
 
   /* GET Registration Page */
@@ -31,8 +31,7 @@ module.exports = function(passport){
 
   /* GET Registration Page */
   router.get('/register', function(req, res){
-    res.render('register',{message: req.session.message});
-
+    res.render('register',{message: req.flash('message')});
   });
  
   /* Handle Registration POST */

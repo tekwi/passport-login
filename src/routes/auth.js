@@ -3,7 +3,7 @@ var express = require('express')
     , uuid = require('node-uuid');
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
+router.get('/:code?/:scope?', function(req, res, next) {
   var AWS = require("aws-sdk")
   
   AWS.config.update({
@@ -15,13 +15,13 @@ router.get('/', function(req, res, next) {
   var params = {
     TableName:table,
     Item:{
-      "code":req.session.code,
+      "code":req.query.code,
       "timestamp":new Date().getTime(),
       "id":uuid.v4(),
       "user": "test" 
     } 
   };  
-  if (req.session.code) { 
+  if (req.query.code) { 
     docClient.put(params, function(err, data) {
       if (err) {
         res.send("error: " + JSON.stringify(err, null, 2));

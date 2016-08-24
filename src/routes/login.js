@@ -2,14 +2,54 @@ var express = require('express');
 var router = express.Router();
 
 module.exports = function(passport){
- 
-/* GET login page. */
-  router.get('/', function(req, res) {
 
+ /* GET login page. */
+  router.get('/', function(req, res) {
       res.render('index', { message: req.flash('info') });
-    
   });
 
+/* GET login page. */
+  // router.get('/:code?/:scope?', function(req, res) {
+  //           res.render('index', { message: req.flash('info') });
+  // })
+    // if (req.query.code && req.query.scope) { 
+    //   //
+    //   var uuid = require('node-uuid');
+
+
+    //     var AWS = require("aws-sdk")
+        
+    //     AWS.config.update({
+    //       region: "us-west-2",
+    //     });
+        
+    //     var docClient = new AWS.DynamoDB.DocumentClient();
+    //     var table = "authcodes";
+    //     var params = {
+    //       TableName:table,
+    //       Item:{
+    //         "code":req.session.code,
+    //         "timestamp":new Date().getTime(),
+    //         "id":uuid.v4(),
+    //         "user": "test" 
+    //       } 
+    //     };  
+    //     if (req.session.code) { 
+    //       docClient.put(params, function(err, data) {
+    //         if (err) {
+    //           res.send("error: " + JSON.stringify(err, null, 2));
+    //         } else {
+    //           //req.session.destroy(function(err){});
+    //           res.send("Congratulations, you are now registered and ready to use voice-enabled printer.");
+    //         }
+    //       });
+    //     }else{
+    //       res.send("Authcode not valid.");
+    //     }
+    //       // res.send("Success! You are now ready to talk to MACEDON!");
+    //     }else
+  //           res.render('index', { message: req.flash('info') });
+  // });
   /* GET login page. */
   // router.get('/:code?/:scope?', function(req, res) {
   //   if (req.query.code && req.query.scope) {

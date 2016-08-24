@@ -3,7 +3,7 @@
 // load all the things we need
 var LocalStrategy   = require('passport-local').Strategy
     , uuid = require('node-uuid')
-    , bcrypt   = require('bcrypt-nodejs');
+    , bcrypt = require('bcrypt-nodejs');
 
 var aws = require('aws-sdk')
 aws.config.update({region: "us-west-2"});

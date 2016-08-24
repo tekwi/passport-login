@@ -4,10 +4,18 @@ var router = express.Router();
 module.exports = function(passport){
  
   /* GET login page. */
-  router.get('/', function(req, res) {
-    // Display the Login page with any flash message, if any
-    // res.render('index', { message: req.session.message });
-    res.render('index', { message: req.flash('info') });
+  router.get('/:code?/:scope?', function(req, res) {
+    if (req.query.code && req.query.scope) {
+      /* GET users listing. */
+       req.session.code = req.query.code;
+       req.session.scope = req.query.scope;
+
+       res.redirect("/auth");
+       
+      //res.send("Success! You are now ready to talk to MACEDON!");
+    }else
+      res.render('index', { message: req.flash('info') });
+    
   });
  
 

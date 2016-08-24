@@ -3,20 +3,27 @@ var router = express.Router();
 
 module.exports = function(passport){
  
-  /* GET login page. */
-  router.get('/:code?/:scope?', function(req, res) {
-    if (req.query.code && req.query.scope) {
-      /* GET users listing. */
-       req.session.code = req.query.code;
-       req.session.scope = req.query.scope;
+/* GET login page. */
+  router.get('/', function(req, res) {
 
-       res.redirect("/auth");
-       
-      //res.send("Success! You are now ready to talk to MACEDON!");
-    }else
       res.render('index', { message: req.flash('info') });
     
   });
+
+  /* GET login page. */
+  // router.get('/:code?/:scope?', function(req, res) {
+  //   if (req.query.code && req.query.scope) {
+  //     /* GET users listing. */
+  //      req.session.code = req.query.code;
+  //      req.session.scope = req.query.scope;
+
+  //      res.redirect("/auth");
+       
+  //     //res.send("Success! You are now ready to talk to MACEDON!");
+  //   }else
+  //     res.render('index', { message: req.flash('info') });
+    
+  // });
  
 
   /* Handle Login POST */

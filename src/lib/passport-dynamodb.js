@@ -1,9 +1,9 @@
 // config/passport.js
 
 // load all the things we need
-var LocalStrategy   = require('passport-local').Strategy;
-
-var bcrypt   = require('bcrypt-nodejs');
+var LocalStrategy   = require('passport-local').Strategy
+    , uuid = require('node-uuid')
+    , bcrypt   = require('bcrypt-nodejs');
 
 var aws = require('aws-sdk')
 aws.config.update({region: "us-west-2"});
@@ -83,9 +83,10 @@ module.exports = function(passport) {
           if (err) {
             return done(err);
           }
-          console.log("here");
+          
           // check to see if theres already a user with that email
           if (data.Items.length > 0) {
+            console.log("here now");
             return done(null, false, req.flash("message", "That email is already taken."));
           } else {
             

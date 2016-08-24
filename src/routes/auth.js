@@ -26,7 +26,7 @@ router.get('/', function(req, res, next) {
       if (err) {
         res.send("error: " + JSON.stringify(err, null, 2));
       } else {
-        req.session.destroy(function(err){});
+        //req.session.destroy(function(err){});
         res.send("Congratulations, you are now registered and ready to use voice-enabled printer.");
       }
     });

@@ -93,7 +93,7 @@ module.exports = function(passport) {
             var params = {
               "TableName": tableName,
               "Item": {
-                "id": { "N": (Math.floor(Math.random() * 4294967296)).toString() },
+                "id": { "N": uuid.v4() },
                 "firstName": { "S": req.body.firstName },
                 "lastName": { "S": req.body.lastName },
                 "email": {"S" : req.body.email},

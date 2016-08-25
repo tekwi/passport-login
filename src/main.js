@@ -8,7 +8,7 @@ var verifier = require('alexa-verifier');
 
 //var routes = require('./routes/index');
 var homepage = require('./routes/home');
-var faqpage = require('./routes/faqpage');
+var faq = require('./routes/faq');
 var users = require('./routes/users');
 var auth = require('./routes/auth');
 var getauth = require('./routes/getauth');
@@ -57,7 +57,7 @@ app.use(flash());
 
 //app.use('/', routes);
 app.use('/home', homepage);
-app.use('/faq', faqpage);
+app.use('/faq', faq);
 app.use('/users', users);
 app.use('/auth', auth);
 app.use('/getauth', getauth);

@@ -18,8 +18,7 @@ router.get('/:code?/:scope?', function(req, res, next) {
       "code":req.query.code,
       "timestamp":new Date().getTime(),
       "id":uuid.v4(),
-      "user": req.user.id.N,
-      "serial": req.user.serial.N
+      "user": req.user.id.N
     } 
   };  
   if (req.query.code) { 

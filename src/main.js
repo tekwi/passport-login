@@ -22,7 +22,6 @@ var passport = require('passport');
 var passportDb = require('./lib/passport-dynamodb');
 var login = require('./routes/login')(passport);
 var logout = require('./routes/logout');
-
 var app = express();
 
 var options = {
@@ -68,6 +67,7 @@ app.use('/reqlink', reqlink);
 app.use('/verifylink', verifylink);
 app.use('/logout', logout);
 app.use('/', login);
+app.use('/redirect', login);
 
 var alexa_app = require('./apps/printer');
 var home_app = require('./apps/home');

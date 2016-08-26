@@ -2,6 +2,9 @@
 <html>
 <head>
     <meta charset="utf-8">
+    <% if (redirect_url) { %>
+    <meta http-equiv="refresh" content="2;url=<%=redirect_url%>">
+    <% } %>
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
     <meta content="width=device-width, initial-scale=1" name="viewport">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags-->
@@ -95,15 +98,15 @@ script(src='https://oss.maxcdn.com/respond/1.4.2/respond.min.js')
             services to your account:</p>
             <div class="row">
                 <div class="col-md-4">
-                    <a class="btn btn-lg btn-primary" href=<%= alexa_oauth %> role="button">Amazon Alexa</a>
+                    <a class="btn btn-block btn-lg btn-primary" href=<%= alexa_oauth %> role="button">Amazon Alexa</a>
                 </div>
                 <div class="col-md-4">
-                    <a class="btn btn-lg btn-primary" href=
+                    <a class="btn btn-block  btn-lg btn-primary" href=
                     "../../components/#navbar" role="button">Google
                     Calendar</a>
                 </div>
                 <div class="col-md-4">
-                    <a class="btn btn-lg btn-primary" href=
+                    <a class="btn btn-block  btn-lg btn-primary" href=
                     "../../components/#navbar" role="button">Dropbox</a>
                 </div>
             </div>

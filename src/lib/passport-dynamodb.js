@@ -86,7 +86,6 @@ module.exports = function(passport) {
           
           // check to see if theres already a user with that email
           if (data.Items.length > 0) {
-            console.log("here now");
             return done(null, false, req.flash("message", "That email is already taken."));
           } else {
             

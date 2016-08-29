@@ -19,6 +19,7 @@ var reqlink = require('./routes/reqlink');
 var verifylink = require('./routes/verifylink');
 var expressSession = require('express-session');
 var passport = require('passport');
+
 var passportDb = require('./lib/passport-dynamodb');
 var login = require('./routes/login')(passport);
 var logout = require('./routes/logout');

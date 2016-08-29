@@ -1,9 +1,10 @@
 var express = require('express')
     , router = express.Router()
-    , uuid = require('node-uuid');
+    , uuid = require('node-uuid')
+    , acl  = require('.././lib/acl');
 
 /* GET users listing. */
-router.get('/:code?/:scope?', function(req, res, next) {
+router.get('/:code?/:scope?', acl, function(req, res, next) {
   var AWS = require("aws-sdk")
   
   AWS.config.update({

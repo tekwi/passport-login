@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <% if (redirect_url) { %>
-    <meta http-equiv="refresh" content="<%=local.seconds%>;url=<%=local.redirect_url%>">
+    <meta http-equiv="refresh" content="<%=seconds%>;url=<%=redirect_url%>">
     <% } %>
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
     <meta content="width=device-width, initial-scale=1" name="viewport">
@@ -84,7 +84,7 @@ script(src='https://oss.maxcdn.com/respond/1.4.2/respond.min.js')
             <p>Thank you for participating in our alpha test.</p>
             <% if (message.length > 0) { %>
                 <div class="alert alert-warning user-login" style="display: block;">
-                    <h3><%= local.message %></h3>
+                    <h3><%= message %></h3>
                 </div>
             <% } %>
         </div>

@@ -56,19 +56,21 @@ var flash = require('connect-flash');
 app.use(flash());
 
 //app.use('/', routes);
-app.use('/home', homepage);
-app.use('/faq', faq);
-app.use('/users', users);
-app.use('/auth', auth);
-app.use('/getauth', getauth);
-app.use('/getaction', getaction);
-app.use('/getlight', getlight);
-app.use('/temp', temp);
-app.use('/reqlink', reqlink);
-app.use('/verifylink', verifylink);
-app.use('/logout', logout);
-app.use('/', login);
-app.use('/redirect', login);
+// app.use('/home', homepage);
+// app.use('/faq', faq);
+// app.use('/users', users);
+// app.use('/auth', auth);
+// app.use('/getauth', getauth);
+// app.use('/getaction', getaction);
+// app.use('/getlight', getlight);
+// app.use('/temp', temp);
+// app.use('/reqlink', reqlink);
+// app.use('/verifylink', verifylink);
+// app.use('/logout', logout);
+// app.use('/', login);
+// app.use('/redirect', login);
+
+
 
 var alexa_app = require('./apps/printer');
 var home_app = require('./apps/home');
@@ -104,6 +106,7 @@ app.use (req, res, next) ->
       else
         next()
 */
+app.use(require('./controllers'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

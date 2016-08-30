@@ -124,8 +124,7 @@ console.log(app.get('env'));
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);
-    res.render('error', {
-      message: err.message,
+    res.render('error/error', {
       error: err
     });
   });

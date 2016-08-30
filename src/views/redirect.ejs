@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <% if (local.redirect_url) { %>
+    <% if (redirect_url) { %>
     <meta http-equiv="refresh" content="<%=local.seconds%>;url=<%=local.redirect_url%>">
     <% } %>
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
@@ -82,7 +82,7 @@ script(src='https://oss.maxcdn.com/respond/1.4.2/respond.min.js')
         <div class="jumbotron">
             <h1>Welcome</h1>
             <p>Thank you for participating in our alpha test.</p>
-            <% if (local.message.length > 0) { %>
+            <% if (message.length > 0) { %>
                 <div class="alert alert-warning user-login" style="display: block;">
                     <h3><%= local.message %></h3>
                 </div>

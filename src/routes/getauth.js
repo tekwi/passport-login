@@ -14,7 +14,7 @@ router.get('/', function(req, res, next) {
   var params = {
     TableName:table,
     Key:{
-      "id":req.query["id"]      
+      "serial":req.query["serial"]      
     } 
   };  
   console.log("Requesting an item from table " + table);

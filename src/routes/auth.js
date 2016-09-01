@@ -18,7 +18,7 @@ router.get('/:code?/:scope?', acl, function(req, res, next) {
     Item:{
       "code":req.query.code,
       "timestamp":new Date().getTime(),
-      "id":uuid.v4(),
+      "id":req.user.serial.S,
       "user": req.user.id.N
     } 
   };  

@@ -1,10 +1,10 @@
 var express = require('express')
   , router = express.Router()
-  , Users = require('../models/users')
+  , Linkcodes = require('../models/linkcodes')
 
 // Handle get req to /users  
 router.get('/:id?', function(req, res) {
-   Users.getAll(function (err, user) {
+   Linkcodes.getAll(function (err, user) {
     res.send({user: user});
   })
 });

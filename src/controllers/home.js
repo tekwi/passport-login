@@ -1,6 +1,6 @@
 var express = require('express')
   , router = express.Router()
-  , Comment = require('../models/user')
+  , Comment = require('../models/users')
   , acl  = require('../lib/acl');
 
 /* GET home page. */

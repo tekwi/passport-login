@@ -9,6 +9,8 @@ router.use('/logout', require('./logout'));
 router.use('/home', require('./home'));
 router.use('/faq', require('./faq'));
 router.use('/error', require('./error'));
+router.use('/auth', require('./auth'));
+router.use('/linkcodes', require('./linkcodes'));
 router.use('/', require('./login')(passport));
 
 router.get('/', function(req, res) {

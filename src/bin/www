@@ -9,6 +9,12 @@ var debug = require('debug')('mws:server');
 var http = require('http');
 
 /**
+* Setting AWS Variables
+*/
+  process.env['AWS_ACCESS_KEY_ID'] = "AKIAIU6YJFLVAL4Y6FVA";
+  process.env['AWS_SECRET_ACCESS_KEY'] = "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";
+
+/**
  * Get port from environment and store in Express.
  */
 

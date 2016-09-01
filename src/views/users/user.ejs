@@ -4,7 +4,6 @@
     <title>User Info</title>
 </head>
 <body>
-    <h1>User with id: <%= (user) ? user.id : "" %></h1>
-    <p>User text:<%= (user.text) ? user.text : "" %></p><a href="/">Back</a>
+    <p>User text: <%= (user) ? JSON.stringify(user) : "" %></p><a href="/">Back</a>
 </body>
 </html>

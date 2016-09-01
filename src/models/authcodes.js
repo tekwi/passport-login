@@ -1,26 +1,56 @@
+//dynamodb model
+var DynamoDBModel = require('dynamodb-model');
+//aws connection
+var awsConfig   = require('../lib/awsconfig');
 
-// Create new comment in your database and return its id
-exports.create = function(user, text, cb) {
-  cb('12345')
+var tableSchema2 = new DynamoDBModel.Schema({
+  id: {
+    type: String,
+    key: 'hash'
+  },
+  code : String,
+  timestamp: Number, 
+  user: Number
+});
+
+// create a model using the name of the DynamoDB table and a schema 
+/**
+ * authcodesTable Db Model instance
+ * @type {DynamoDBModel}
+ * options are: table name, table schema and awsConfig
+ */
+var authcodesTable = new DynamoDBModel.Model('authcodes', tableSchema2, awsConfig);
+
+var Authcodes = {}; 
+
+// Create new row
+Authcodes.create = function(input, cb) {
+  authcodesTable.putItem(input, function (err, item, response) {
+    if(err){
+      cb(err);
+    }else
+      cb(null, item);
+  })
 }
 
-// Get a particular comment
-exports.get = function(id, cb) {
-  cb(null, {id:id, text: 'Very nice example'})
+// Get a particular row
+Authcodes.get = function(input, cb) {
+  authcodesTable.getItem(input, function (err, item, response) {
+    if(err){
+      cb(err);
+    }else
+      cb(null, item);
+  })
 }
 
-// Get all comments
-exports.all = function(cb) {
-  cb(null, [])
+// Get all rows
+Authcodes.getAll = function(cb) {
+  authcodesTable.scan(function (err, item, response) {
+    if(err){
+      cb(err);
+    }else
+      cb(null, item)
+  })
 }
 
-// Get all comments by a particular user
-exports.allByUser = function(user, cb) {
-  cb(null, [])
-}
-
-// Get a particular comment
-exports.put = function(params, cb) {
-  
-  cb(null, {id:id, text: 'Very nice example'})
-}
+module.exports = Authcodes;

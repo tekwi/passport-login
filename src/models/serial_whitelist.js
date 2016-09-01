@@ -1,20 +1,54 @@
+//dynamodb model
+var DynamoDBModel = require('dynamodb-model');
+//aws connection
+var awsConfig	  = require('../lib/awsconfig');
 
-// Create new comment in your database and return its id
-exports.create = function(user, text, cb) {
-  cb('12345')
+var tableSchema = new DynamoDBModel.Schema({
+  id: {
+    type: String,
+    key: 'hash'
+  }
+});
+
+// create a model using the name of the DynamoDB table and a schema 
+/**
+ * serialwhiteTable Db Model instance
+ * @type {DynamoDBModel}
+ * options are: table name, table schema and awsConfig
+ */
+var serialwhiteTable = new DynamoDBModel.Model('serial_whitelist', tableSchema, awsConfig);
+
+var Serial = {}; 
+
+// Create new row
+Serial.create = function(input, cb) {
+	serialwhiteTable.putItem(input, function (err, item, response) {
+		if(err){
+			cb(err);
+		}else
+			cb(null, item);
+	})
 }
 
-// Get a particular comment
-exports.get = function(id, cb) {
-  cb(null, {id:id, text: 'Very nice example'})
+// Get a particular row
+Serial.get = function(input, cb) {
+	serialwhiteTable.getItem(input, function (err, item, response) {
+		if(err){
+			cb(err);
+		}else
+			cb(null, item);
+	})
 }
 
-// Get all comments
-exports.all = function(cb) {
-  cb(null, [])
+// Get all rows
+Serial.getAll = function(cb) {
+	serialwhiteTable.scan(function (err, item, response) {
+		if(err){
+			cb(err);
+		}else
+			cb(null, item)
+	})
 }
 
-// Get all comments by a particular user
-exports.allByUser = function(user, cb) {
-  cb(null, [])
-}
+
+module.exports = Serial;

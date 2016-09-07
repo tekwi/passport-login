@@ -5,7 +5,7 @@ var express = require('express')
 // Handle get req to /users  
 router.get('/:id?', function(req, res) {
    Users.getAll(function (err, user) {
-    res.send({user: user});
+    res.render('users/index',{users: user});
   })
 });
 

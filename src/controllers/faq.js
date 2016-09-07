@@ -3,9 +3,7 @@ var express = require('express')
   , Comment = require('../models/users')
 
 router.get('/', function(req, res) {
-  Comment.get(req.params.id, function (err, user) {
-    res.render('faq/faq', {user: user})
-  })
+    res.render('faq/')
 })
 
 module.exports = router

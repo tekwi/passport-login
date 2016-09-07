@@ -15,6 +15,8 @@ var tableSchema = new DynamoDBModel.Schema({
   serial: String
 });
 
+var tableName = "user";
+
 // create a model using the name of the DynamoDB table and a schema 
 /**
  * usersTable Db Model instance
@@ -26,7 +28,8 @@ var Users = {};
 
 // Create new row
 Users.create = function(input, cb) {
-	
+	var usersTable = new DynamoDBModel.Model(tableName, tableSchema, awsConfig);
+
 	usersTable.putItem(input, function (err, item, response) {
 		if(err){
 			cb(err);
@@ -37,6 +40,8 @@ Users.create = function(input, cb) {
 
 // Get a particular row
 Users.get = function(input, cb) {
+	var usersTable = new DynamoDBModel.Model(tableName, tableSchema, awsConfig);
+
 	usersTable.getItem(input, function (err, item, response) {
 		if(err){
 			cb(err);
@@ -47,9 +52,7 @@ Users.get = function(input, cb) {
 
 // Get all rows
 Users.getAll = function(cb) {
-	// cb(null, "USER MODEL")
-	// 
-	var usersTable = new DynamoDBModel.Model('user', tableSchema, awsConfig);
+	var usersTable = new DynamoDBModel.Model(tableName, tableSchema, awsConfig);
 
 	usersTable.scan(function (err, item, response) {
     if(err){

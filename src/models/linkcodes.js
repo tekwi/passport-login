@@ -4,12 +4,12 @@ var DynamoDBModel = require('dynamodb-model');
 var awsConfig   = require('../lib/awsconfig');
 
 var tableSchema = new DynamoDBModel.Schema({
-  id: {
-    type: Number
-  },
+  id: Number,
   serial : String,
   timestamp: Number, 
 });
+
+var tableName = "linkcodes";
 
 // create a model using the name of the DynamoDB table and a schema 
 /**
@@ -17,12 +17,14 @@ var tableSchema = new DynamoDBModel.Schema({
  * @type {DynamoDBModel}
  * options are: table name, table schema and awsConfig
  */
-var linkcodesTable = new DynamoDBModel.Model('linkcodes', tableSchema, awsConfig);
+//var linkcodesTable = new DynamoDBModel.Model('linkcodes', tableSchema, awsConfig);
 
 var Linkcodes = {}; 
 
 // Create new row
 Linkcodes.create = function(input, cb) {
+  var linkcodesTable = new DynamoDBModel.Model(tableName, tableSchema, awsConfig);
+
   linkcodesTable.putItem(input, function (err, item, response) {
     if(err){
       cb(err);
@@ -33,6 +35,8 @@ Linkcodes.create = function(input, cb) {
 
 // Get a particular row
 Linkcodes.get = function(input, cb) {
+  var linkcodesTable = new DynamoDBModel.Model(tableName, tableSchema, awsConfig);
+
   linkcodesTable.getItem(input, function (err, item, response) {
     if(err){
       cb(err);
@@ -43,16 +47,7 @@ Linkcodes.get = function(input, cb) {
 
 // Get all rows
 Linkcodes.getAll = function(cb) {
-  // cb(null, "LINKCODES MODEL")
-  // 
-/*  var tableSchema = new DynamoDBModel.Schema({
-    id: {
-      type: Number
-    },
-    serial : String,
-    timestamp: Number, 
-  });*/
-  var linkcodesTable = new DynamoDBModel.Model('linkcodes', tableSchema, awsConfig);
+  var linkcodesTable = new DynamoDBModel.Model(tableName, tableSchema, awsConfig);
 
   linkcodesTable.scan(function (err, item, response) {
     if(err){

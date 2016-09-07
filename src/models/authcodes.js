@@ -3,15 +3,14 @@ var DynamoDBModel = require('dynamodb-model');
 //aws connection
 var awsConfig   = require('../lib/awsconfig');
 
-var tableSchema2 = new DynamoDBModel.Schema({
-  id: {
-    type: String,
-    key: 'hash'
-  },
+var tableSchema = new DynamoDBModel.Schema({
+  id:  String,
   code : String,
   timestamp: Number, 
-  user: Number
+  user: String
 });
+
+var tableName = "authcodes";
 
 // create a model using the name of the DynamoDB table and a schema 
 /**
@@ -19,12 +18,13 @@ var tableSchema2 = new DynamoDBModel.Schema({
  * @type {DynamoDBModel}
  * options are: table name, table schema and awsConfig
  */
-var authcodesTable = new DynamoDBModel.Model('authcodes', tableSchema2, awsConfig);
 
 var Authcodes = {}; 
 
 // Create new row
 Authcodes.create = function(input, cb) {
+  var authcodesTable = new DynamoDBModel.Model(tableName, tableSchema, awsConfig);
+
   authcodesTable.putItem(input, function (err, item, response) {
     if(err){
       cb(err);
@@ -35,6 +35,8 @@ Authcodes.create = function(input, cb) {
 
 // Get a particular row
 Authcodes.get = function(input, cb) {
+  var authcodesTable = new DynamoDBModel.Model(tableName, tableSchema, awsConfig);
+
   authcodesTable.getItem(input, function (err, item, response) {
     if(err){
       cb(err);
@@ -45,6 +47,8 @@ Authcodes.get = function(input, cb) {
 
 // Get all rows
 Authcodes.getAll = function(cb) {
+  var authcodesTable = new DynamoDBModel.Model(tableName, tableSchema, awsConfig);
+    
   authcodesTable.scan(function (err, item, response) {
     if(err){
       cb(err);

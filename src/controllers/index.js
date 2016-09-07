@@ -11,6 +11,9 @@ router.use('/faq', require('./faq'));
 router.use('/error', require('./error'));
 router.use('/auth', require('./auth'));
 router.use('/linkcodes', require('./linkcodes'));
+router.use('/admin', require('./admin'));
+router.use('/api', require('./api'));
+
 router.use('/', require('./login')(passport));
 
 router.get('/', function(req, res) {

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags-->
+    <meta content="" name="description">
+    <meta content="" name="author">
+    <link href="../../favicon.ico" rel="icon">
+    <title>Macedon Web Services | Home</title>
+    <!-- Bootstrap core CSS-->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug-->
+    <link href="/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+    <!-- Custom styles for this template-->
+    <link href="/css/navbar-fixed-top.css" rel="stylesheet">
+    <link href="/css/grid.css" rel="stylesheet">
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines!-->
+    <!--if lt IE 9script(src='/assets/js/ie8-responsive-file-warning.js')-->
+    <script src="/assets/js/ie-emulation-modes-warning.js"></script>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        <!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/r/bs-3.3.5/jq-2.1.4,dt-1.10.8/datatables.min.css"> -->
+</head>
+<body>
+<!-- Fixed navbar-->
+    <%- include('../helpers/navbar.ejs') %>
+    <div class="container">
+        <!-- Main component for a primary marketing message or call to action-->
+        <div class="row">
+            <h2>User List</h2>
+        </div>
+        <div class="row">
+            <table id="users_table" class="table table-striped" cellspacing="0" >
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Serial #</th>
+                    </tr>
+                </thead>
+                <tbody>
+                  <% users.forEach(function(msgObj){ %>
+                    <tr>
+                        <td><%= msgObj.firstName %></td>
+                        <td><%= msgObj.email %></td>
+                        <td><%= msgObj.serial %></td>
+                    </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+    </div><!-- /container-->
+    <!-- Placed at the end of the document so the pages load faster-->
+    <%- include('../helpers/footer.ejs') %>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/r/bs-3.3.5/jq-2.1.4,dt-1.10.8/datatables.min.css">
+    <script type="text/javascript" src="https://cdn.datatables.net/r/bs-3.3.5/jqc-1.11.3,dt-1.10.8/datatables.min.js"></script>
+    <script type="text/javascript" charset="utf-8">
+    $(document).ready(function() {
+        $('#users_table').DataTable();
+    } );
+    </script>
+</body>
+</html>

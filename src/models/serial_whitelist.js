@@ -10,18 +10,21 @@ var tableSchema = new DynamoDBModel.Schema({
   }
 });
 
+var tableName = "serial_whitelist";
 // create a model using the name of the DynamoDB table and a schema 
 /**
  * serialwhiteTable Db Model instance
  * @type {DynamoDBModel}
  * options are: table name, table schema and awsConfig
  */
-var serialwhiteTable = new DynamoDBModel.Model('serial_whitelist', tableSchema, awsConfig);
 
 var Serial = {}; 
 
 // Create new row
 Serial.create = function(input, cb) {
+
+	var serialwhiteTable = new DynamoDBModel.Model(tableName, tableSchema, awsConfig);
+
 	serialwhiteTable.putItem(input, function (err, item, response) {
 		if(err){
 			cb(err);
@@ -32,6 +35,8 @@ Serial.create = function(input, cb) {
 
 // Get a particular row
 Serial.get = function(input, cb) {
+	var serialwhiteTable = new DynamoDBModel.Model(tableName, tableSchema, awsConfig);
+
 	serialwhiteTable.getItem(input, function (err, item, response) {
 		if(err){
 			cb(err);
@@ -42,6 +47,8 @@ Serial.get = function(input, cb) {
 
 // Get all rows
 Serial.getAll = function(cb) {
+	var serialwhiteTable = new DynamoDBModel.Model(tableName, tableSchema, awsConfig);
+	
 	serialwhiteTable.scan(function (err, item, response) {
 		if(err){
 			cb(err);

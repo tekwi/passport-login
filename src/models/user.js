@@ -4,12 +4,13 @@ var DynamoDBModel = require('dynamodb-model');
 var awsConfig	  = require('../lib/awsconfig');
 
 var tableSchema = new DynamoDBModel.Schema({
-  email: {
-    type: String,
+  id: {
+    type: Number,
     key: 'hash'
   },
-  id: {
-	type: Number,
+  email: {
+	type: String,
+	index: true
   },
   firstName: String,
   lastName: String,
@@ -18,7 +19,7 @@ var tableSchema = new DynamoDBModel.Schema({
 
 });
 
-var tableName = "users";
+var tableName = "user";
 
 // create a model using the name of the DynamoDB table and a schema 
 /**

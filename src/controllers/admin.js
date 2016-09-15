@@ -51,14 +51,14 @@ router.post('/users', acl, function(req, res) {
     var input = {"email" : req.body.key};
     var updates = {"status" : 2};
     Users.update(input, updates,function (err) {
-      res.json("Success");
+      res.json("Disable Success");
     }); 
   }
   if(req.body.action == "reset-user") {   
     var input = {"email" : req.body.key};
     var updates = {"status" : 3};
-        Users.update(input, updates,function (err) {
-      res.json("Success");
+    Users.update(input, updates,function (err) {
+      res.json("Reset Success");
     });
   }
   
@@ -66,8 +66,14 @@ router.post('/users', acl, function(req, res) {
 
 // Handle get req to /users  
 router.delete('/users', acl, function(req, res) {
-  console.log(req.body);
-  res.send("got delete");
+    var input = {"email" : req.body.key};
+    if(req.body.key != req.user.email){
+      Users.delete(input,function (err) {
+        res.json("Delete Success");
+      });
+    }else{
+      res.json("Self Delete not allowed");
+    }
 });
 
 

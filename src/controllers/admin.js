@@ -44,5 +44,31 @@ router.get('/users', acl, function(req, res) {
   })
 });
 
+// Handle get req to /users  
+router.post('/users', acl, function(req, res) {
+
+  if(req.body.action == "disable-user") {   
+    var input = {"email" : req.body.key};
+    var updates = {"status" : 2};
+    Users.update(input, updates,function (err) {
+      res.json("Success");
+    }); 
+  }
+  if(req.body.action == "reset-user") {   
+    var input = {"email" : req.body.key};
+    var updates = {"status" : 3};
+        Users.update(input, updates,function (err) {
+      res.json("Success");
+    });
+  }
+  
+});
+
+// Handle get req to /users  
+router.delete('/users', acl, function(req, res) {
+  console.log(req.body);
+  res.send("got delete");
+});
+
 
 module.exports = router

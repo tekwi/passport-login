@@ -15,6 +15,7 @@ var tableSchema = new DynamoDBModel.Schema({
   lastName: String,
   pw: String,
   serial: String,
+  status: Number
 
 });
 
@@ -78,5 +79,30 @@ Users.getAll = function(cb) {
 	})
 }
 
+// Delete rows
+Users.delete = function(input, cb) {
+	var usersTable = new DynamoDBModel.Model(tableName, tableSchema, awsConfig);
+
+	usersTable.deleteItem(input, function (err, item, response) {
+    if(err){
+      cb(err);
+    }else{
+      cb(null, item)
+    }
+	})
+}
+
+// Update rows
+Users.update = function(input, updates, cb) {
+	var usersTable = new DynamoDBModel.Model(tableName, tableSchema, awsConfig);
+
+	usersTable.updateItem(input, updates, function (err, item, response) {
+    if(err){
+      cb(err);
+    }else{
+      cb(null, item)
+    }
+	})
+}
 
 module.exports = Users;

@@ -1,18 +1,10 @@
-// config/passport.js
-
 // load all the things we need
 var LocalStrategy   = require('passport-local').Strategy
     , uuid = require('node-uuid')
-    , bcrypt = require('bcrypt-nodejs');
-
-/*var aws = require('aws-sdk')
-aws.config.update({region: "us-west-2"});
-var dd = new aws.DynamoDB();
-var tableName = "user";*/
-
-var Users = require('../models/users')
-  , Serialwhitelist = require('../models/serial_whitelist')
-  , acl  = require('../lib/acl');
+    , bcrypt = require('bcrypt-nodejs')
+    , Users = require('../models/users')
+    , Serialwhitelist = require('../models/serial_whitelist')
+    , acl  = require('../lib/acl');
 
 // expose this function to our app using module.exports
 module.exports = function(passport) {
@@ -29,9 +21,9 @@ module.exports = function(passport) {
   //deserialize login session
   passport.deserializeUser(function (user,done) {
     Users.get({"email" : user}, function(err,items){
-      if (err){
+      if (err)
         done(err,items);
-      }else if(items)
+      else if(items)
         done(null,items);
       else
         done(err, false);
@@ -54,13 +46,11 @@ module.exports = function(passport) {
     //check if the email is unique
     Users.get({"email" : email}, function(err, items) {
       if(items) {
-        console.log("email check")
         return done(err,false, req.flash('message', "Email already registered."));
       }else{
         //check if the serial is whitelisted
         Serialwhitelist.get({"id" : req.body.serial }, function(err, items) {
           if(!items) {
-            console.log ("serial check")
             return done(err,false, req.flash('message', "Invalid Serial number."));
           }else{
              //User data

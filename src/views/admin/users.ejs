@@ -71,6 +71,7 @@
                                         <th>Email</th>
                                         <th>Role</th>
                                         <th>Serial #</th>
+                                        <th>Status</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
@@ -81,10 +82,12 @@
                                         <td><%= msgObj.email %></td>
                                         <td><%= "Admin" %></td>
                                         <td><%= msgObj.serial %></td>
+                                        <td><%= msgObj.status %></td>
                                         <td>
-                                            <button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" title="Edit"><span class="glyphicon glyphicon-pencil"></span></button>
-                                            <button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" title="Delete"><span class="glyphicon glyphicon-trash"></span></button>
-                                            <button class="btn btn-warning btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" title="Reset"><span class="glyphicon glyphicon-eject"></span></button>
+                                            <!-- <button class="btn btn-primary btn-xs" onclick='edit_modal("<%= msgObj.id %>")' data-title="Edit" data-toggle="modal" data-target="#edit" title="Edit"><span class="glyphicon glyphicon-pencil"></span></button> -->
+                                            <button class="btn btn-warning btn-xs" onclick="reset_modal('<%= msgObj.email %>')" data-title="Reset" data-toggle="modal" data-target="#reset" title="Reset"><span class="glyphicon glyphicon-eject"></span></button>
+                                            <button class="btn btn-warning btn-xs" onclick="disable_modal('<%= msgObj.email %>')" data-title="Disable" data-toggle="modal" data-target="#disable" title="Disable"><span class="glyphicon glyphicon-ban-circle"></span></button>
+                                            <button class="btn btn-danger btn-xs" onclick="delete_modal(<%= msgObj.id %>)" data-title="Delete" data-toggle="modal" data-target="#delete" title="Delete"><span class="glyphicon glyphicon-trash"></span></button>
                                         </td>
                                     </tr>
                                     <% }) %>
@@ -130,8 +133,78 @@
             responsive: true
         });
     });
-    </script>
+    var delete_modal = function (req) {
+        modal_confirm("Delete User", "Are you sure you want to delete the user?", {"yes":"Delete", "class": "btn-danger"}, function(res){
+            if(res == true) {
+                $.ajax({
+                      url: "/admin/users",
+                      type: 'DELETE',
+                      data: {"data" : "delete-user, without self delete"},
+                      success: function (data) {
+                        console.log(data);
+                        window.location.reload(false); 
+                      },
+                      dataType: "json"
+                    });
+            }
+        });
+    };
+    var disable_modal = function (req) {
 
+        modal_confirm("Disable User", "Are you sure you want to disable the user?", {"yes":"Disable", "class": "btn-warning"}, function(res){
+            if(res == true) {
+                $.ajax({
+                      url: "/admin/users",
+                      type: 'POST',
+                      data: {"action" : "disable-user", "key" : req},
+                      success: function (data) {
+                        console.log(data);
+                        window.location.reload(false); 
+                      },
+                      dataType: "json"
+                    });
+            }
+        });
+    };
+    var reset_modal = function (req) {
+        modal_confirm("Reset User", "Are you sure you want to reset the user?", {"yes":"Reset", "class": "btn-warning"}, function(res){
+            if(res == true) {
+                $.ajax({
+                      url: "/admin/users",
+                      type: 'POST',
+                      data: {"action" : "reset-user", "key" : req},
+                      success: function (data) {
+                        console.log(data);
+                        window.location.reload(false); 
+                      },
+                      dataType: "json"
+                    });
+            }
+            
+        });
+    };
+    var edit_modal = function (req) {
+        console.log(req.id)
+        var form_elem = '<div class="form-group"><label>Name</label><input class="form-control" value=></div>'+
+                        '<div class="form-group"><label>Email</label><input class="form-control" value=></div>'+
+                        '<div class="form-group"><label>Serial</label><input class="form-control" value=></div>';
+
+        modal_confirm("Edit User", form_elem, {"yes":"Save", "class": "btn-primary"}, function(res){
+            if(res == true) {
+                $.post({
+                      url: "/admin/users",
+                      data: {"data" : "form-data"},
+                      success: function (data) {
+                        console.log("Success");
+                      },
+                      dataType: "json"
+                    });
+            }
+            
+        });
+    };
+    </script>
+    <%- include('/helpers/client-tools.ejs'); %>
 </body>
 
 </html>
